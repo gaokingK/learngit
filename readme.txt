@@ -340,3 +340,31 @@ c5d3e428e0e6        vmware/harbor-adminserver:v1.2.2   "/harbor/harbor_admi…" 
 101cbd32c45b        vmware/harbor-log:v1.2.2           "/bin/sh -c 'crond &…"   2 weeks ago         Up 2 weeks          127.0.0.1:1514->514/tcp                                            harbor-log
 [root@localhost ~]#
 ```
+path:Docker/learn_Dockerfile.md
+# link:
+    - https://www.runoob.com/docker/docker-dockerfile.html
+# 问题
+- 怎么from 本地镜像
+# 简单构建一个镜像
+```
+# vim Dockerfile
+From 镜像名 # 
+```
+# 设置镜像源
+path:other/learn_Linux_Cgroup&namespace.md
+# link:
+- https://mp.weixin.qq.com/s?__biz=Mzg2NTAyNTc5NQ==&mid=2247484441&idx=1&sn=ae2421fd803b911eb8670891cf90a677&chksm=ce612e75f916a763a3c46053b36aa89c49702064fa568db50e26605cff2c4a60db36037d0c44&scene=27
+## namespace
+- Linux 使用namespace技术来实现进程隔离，这样进程就只能看到分配给自己的资源
+- #### 使用：
+    - linux中船舰一个新的进程 `int pid = clone(main_function, stack_size, SIGCHLD, NULL);`
+    - 如果在创建时可以传一个参数CLONE_NEWPID `int pid = clone(main_function, stack_size, CLONE_NEWPID | SIGCHLD, NULL);` 这样这个新创建的进程就会看到一个隔离的命名空间，这个命名空间里，该进程的pid是1，Docker也使用这个技术来实现不同容器间的资源隔离.
+
+- 为了隔离不同类型的资源，Linux 内核里面实现了以下几种不同类型的 namespace。
+    - UTS，对应的宏为 CLONE_NEWUTS，表示不同的 namespace 可以配置不同的 hostname。
+    - User，对应的宏为 CLONE_NEWUSER，表示不同的 namespace 可以配置不同的用户 和组。
+    - Mount，对应的宏为 CLONE_NEWNS，表示不同的 namespace 的文件系统挂载点是 隔离的
+    - PID，对应的宏为 CLONE_NEWPID，表示不同的 namespace 有完全独立的 pid，也即 一个 namespace 的进程和另一个 namespace 的进程里可以有一样的pid，但是代表不同的进程。
+    - Network，对应的宏为 CLONE_NEWNET，表示不同的 namespace 有独立的网络协议 栈
+## cgroup
+- linux的实现方式是在一个特定的目录下有特定的配置文件。/sys/fs/cgroup/
