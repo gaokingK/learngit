@@ -368,3 +368,5 @@ path:other/learn_Linux_Cgroup&namespace.md
     - Network，对应的宏为 CLONE_NEWNET，表示不同的 namespace 有独立的网络协议 栈
 ## cgroup
 - linux的实现方式是在一个特定的目录下有特定的配置文件。/sys/fs/cgroup/
+path:other/doc/learn_vps.md
+- nameslio设置域名解析：https://www.zhudc.com/website/2413
